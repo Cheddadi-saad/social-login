@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { SportingComponent } from './sporting/sporting.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from './componants/header/header.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SportingComponent
+    SportingComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
