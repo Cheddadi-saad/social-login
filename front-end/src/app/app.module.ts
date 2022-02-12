@@ -7,13 +7,19 @@ import { SportingComponent } from './sporting/sporting.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './componants/header/header.component';
+import { HomeComponent } from './componants/home/home.component';
+import { ProfileComponent } from './componants/profile/profile.component';
+import { SocialComponent } from './componants/social/social.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SportingComponent,
-    HeaderComponent
+    HeaderComponent,
+    HomeComponent,
+    ProfileComponent,
+    SocialComponent
   ],
   imports: [
     BrowserModule,
