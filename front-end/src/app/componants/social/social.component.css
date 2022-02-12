@@ -1,0 +1,30 @@
+
+
+
+
+
+
+.form-signin .btn {
+    font-size: 80%;
+    border-radius: 0rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+    padding: 1rem;
+    transition: all 0.2s;
+    margin-bottom: 10px;
+}
+
+
+
+
+.btn-google {
+    color: white;
+    background-color: #ea4335;
+    width: 100%;
+}
+
+.btn-facebook {
+    color: white;
+    background-color: #3b5998;
+    width: 100%;
+}
