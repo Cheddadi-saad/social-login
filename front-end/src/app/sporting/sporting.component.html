@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="row mt-4 col">
+    <div class="col-md-3">
+      <div class="list-group">
+        <button
+          [ngClass]="ville == currentVille ? 'active' : ''"
+          *ngFor="let ville of villes"
+          type="button"
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+          (click)="onGetActivitesSportives(ville)">
+          {{ ville.name }}
+        </button>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-header">
+          <h4>Liste des Activites Sportives</h4>
+        </div>
+        <div class="card-body">
+          <ul class="nav nav-pills nav-fill" *ngIf="activitesSportives">
+            <li class="nav-item" *ngFor="let activiteSportive of activitesSportives">
+              <button
+                [ngClass]="activiteSportive == currentActiviteSportive ? 'active' : ''"
+                (click)="onGetEmplacements(activiteSportive)"
+                class="nav-link"
+                aria-current="page">
+                {{ activiteSportive.name }}
+              </button>
+            </li>
+          </ul>
+
+          <div *ngIf="emplacements" class="row mt-4">
+            <div class="col-md-4 mt-2" *ngFor="let emplacement of emplacements">
+              <div class="card">
+                <div class="card-header">{{ emplacement.name }}</div>
+                <img src="{{ endpoint + '/image/' + emplacement.id }}" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title">Seances</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <button
+                    [ngClass]="seance == currentSeance ? 'active' : ''"
+                    (click)="onGetReservationPlace(seance)"
+                    class="list-group-item list-group-item-action"
+                    *ngFor="let seance of emplacement.seancesProjections">
+                    {{ "1990-10-10 " + seance.creneau.heureDebut.split(".").join(":") | date: "HH:mm" }}
+                  </button>
+                </ul>
+
+                <div *ngIf="currentSeance">
+                  <div *ngIf="currentSeance.emplacement.id == emplacement.id">
+                    <div class="card-body" *ngIf="currentSeance.reservations">
+                      <nav aria-label="...">
+                        <ul class="pagination pagination-lg">
+                          <li class="page-item" *ngFor="let reservation of currentSeance.reservations">
+                            <button
+                              class="{{ getCssClassReservation(reservation) }}"
+                              (click)="onSelectedReservation(reservation)">
+                              {{ reservation.place?.numero }}
+                            </button>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                    <div *ngIf="selectedReservations.length > 0">
+                      <form class="row p-3 g-3" #form="ngForm" (ngSubmit)="onReservePlace(form.value)">
+                        <div class="col-md-12">
+                          <label for="validationServer01" class="form-label">Nom Client</label>
+                          <input type="text" class="form-control " id="validationServer01" value="Mark" name="nomClient" ngModel required>
+                          <div class="valid-feedback">
+                            Looks good!
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <button class="btn btn-primary" type="submit">Reserver</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
