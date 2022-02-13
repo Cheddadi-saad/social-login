@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.spring.social.Controllers;
+package com.spring.social.controllers;
 
 import java.io.IOException;
 import java.util.Collections;
