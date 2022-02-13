@@ -9,6 +9,9 @@ import java.util.Collections;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.User;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,6 +58,17 @@ public class GoogleController {
 
 		return new ResponseEntity<>(payload, HttpStatus.OK);
 
+	}
+
+	@PostMapping("/facebook")
+	public ResponseEntity<?> loginWithFacebook(@RequestBody TokenDto tokenDto) {
+
+		Facebook facebook = new FacebookTemplate(tokenDto.getToken());
+		String[] data = { "email", "name", "picture" };
+		User user = facebook.fetchObject("me", User.class, data);
+		
+
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
 }
