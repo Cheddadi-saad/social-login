@@ -30,7 +30,7 @@ import com.spring.social.dto.TokenDto;
  */
 @RestController
 @RequestMapping("/api")
-public class GoogleController {
+public class SocialController {
 
 	/** The id client. */
 	@Value("${google.id}")
@@ -60,6 +60,12 @@ public class GoogleController {
 
 	}
 
+	/**
+	 * Login with facebook.
+	 *
+	 * @param tokenDto the token dto
+	 * @return the response entity
+	 */
 	@PostMapping("/facebook")
 	public ResponseEntity<?> loginWithFacebook(@RequestBody TokenDto tokenDto) {
 
