@@ -65,7 +65,7 @@ export class SportingComponent implements OnInit {
     private activiteSportiveService: ActiviteSportiveService,
     private emplacementService: EmplacementService,
     private seanceService: SeanceService,
-    private reservationService:ReservationService
+    private reservationService: ReservationService
   ) {}
 
   /**
@@ -121,6 +121,10 @@ export class SportingComponent implements OnInit {
     });
   }
 
+  /**
+   * Determines whether get reservation place on
+   * @param seance
+   */
   onGetReservationPlace(seance: SeanceElement) {
     this.currentSeance = seance;
     let url = seance._links.reservations.href.replace('{?projection}', '') + '?projection=res1';
@@ -130,6 +134,10 @@ export class SportingComponent implements OnInit {
     });
   }
 
+  /**
+   * Determines whether selected reservation on
+   * @param reservation
+   */
   onSelectedReservation(reservation: ReservationElement) {
     if (!reservation.selected) {
       reservation.selected = true;
@@ -138,9 +146,14 @@ export class SportingComponent implements OnInit {
       reservation.selected = false;
       this.selectedReservations.splice(this.selectedReservations.indexOf(reservation), 1);
     }
-    console.log(this.selectedReservations)
+    console.log(this.selectedReservations);
   }
 
+  /**
+   * Gets css class reservation
+   * @param reservation
+   * @returns
+   */
   getCssClassReservation(reservation: ReservationElement) {
     let str = '';
     if (reservation.reserve == true) {
@@ -152,18 +165,19 @@ export class SportingComponent implements OnInit {
     }
     return str;
   }
-
-  onReservePlace(dataForm: any){
+  /**
+   * Determines whether reserve place on
+   * @param dataForm
+   */
+  onReservePlace(dataForm: any) {
     let reservations: any[] = [];
-    this.selectedReservations.forEach(reservation =>{
+    this.selectedReservations.forEach((reservation) => {
       reservations.push(reservation.id);
-    })
+    });
     dataForm.reservations = reservations;
-    this.reservationService.reserverSeance(dataForm).subscribe((data:ReservationElement) => {
-      alert("place reserver");
+    this.reservationService.reserverSeance(dataForm).subscribe((data: ReservationElement) => {
+      alert('place reserver');
       this.onGetReservationPlace(this.currentSeance);
-    })
-
+    });
   }
-
 }
