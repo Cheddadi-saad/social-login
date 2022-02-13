@@ -11,20 +11,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.social.model.Student;
 
+/**
+ * The Class TestingController.
+ */
 @RestController
 @RequestMapping("/api")
 public class TestingController {
 
+	/** The students. */
 	private List<Student> students = new ArrayList<>();
-
+	
+	/**
+	 * Inits the students.
+	 */
 	@PostConstruct
-	public void init() {
+	public void initStudents() {
 		students.add(new Student(1l, "saad", "cheddadi"));
 		students.add(new Student(2l, "jihane", "cheddadi"));
 		students.add(new Student(3l, "nael", "cheddadi"));
 
 	}
 
+	/**
+	 * Gets the all students.
+	 *
+	 * @return the all students
+	 */
 	@GetMapping("/students")
 	public List<Student> getAllStudents() {
 		return students;
