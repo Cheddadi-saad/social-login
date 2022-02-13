@@ -3,8 +3,8 @@
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
       <div class="card card-signin my-5">
         <div class="card-body">
-          <h5 class="card-title text-center">Sign In</h5>
-          <div class="form-signin">
+
+          <div class="form-signin" *ngIf="!loggedIn">
             <hr class="my-4" />
             <button class="btn btn-lg btn-google btn-block text-uppercase" (click)="signInWithGoogle()">
               <i class="bi bi-google mr-2"></i> Sign in with Google
@@ -12,8 +12,16 @@
             <button class="btn btn-lg btn-facebook btn-block text-uppercase" (click)="signInWithFB()">
               <i class="bi bi-facebook mr-2"></i> Sign in with Facebook
             </button>
-            <button type="button" class="btn btn-error" (click)="signOut()"> Log out</button>
+
           </div>
+          <div *ngIf="loggedIn">
+              <img src="{{ user.photoUrl }}" />
+              <div>
+                <h4>{{ user.name }}</h4>
+                <p>{{ user.email }}</p>
+              </div>
+              <button type="button" class="btn btn-lg btn-google btn-block text-uppercase" (click)="signOut()">Log out</button>
+            </div>
         </div>
       </div>
     </div>
