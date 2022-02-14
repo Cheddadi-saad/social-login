@@ -30,7 +30,6 @@ public class TokenService {
 
 		// Grab principal
 		UserPrincipal principal = (UserPrincipal) authResult.getPrincipal();
-		System.out.println(principal.getUsername());
 
 		// Create JWT Token
 		return JWT.create().withSubject(principal.getUsername())

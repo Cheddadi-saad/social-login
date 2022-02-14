@@ -1,3 +1,4 @@
+import { SocialService } from './../../services/social.service';
 import { Component, OnInit } from '@angular/core';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
@@ -9,11 +10,10 @@ import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-logi
   templateUrl: './social.component.html',
   styleUrls: ['./social.component.css'],
 })
-
 export class SocialComponent implements OnInit {
   user: SocialUser = new SocialUser();
   loggedIn: boolean = false;
-  constructor(private authService: SocialAuthService) {}
+  constructor(private authService: SocialAuthService, private social: SocialService) {}
 
   /**
    * on init
@@ -25,23 +25,32 @@ export class SocialComponent implements OnInit {
     });
   }
 
+
   /**
    * Signs in with google
    */
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then((data) => {
       this.user = data;
-      console.log(data);
+      this.social.loginWithGoogle(data.idToken).subscribe(
+        data => {
+          console.log(data);
+        }
+      );
     });
   }
 
- /**
-  * Signs in with fb
-  */
- signInWithFB(): void {
+  /**
+   * Signs in with fb
+   */
+  signInWithFB(): void {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then((data) => {
       this.user = data;
-      console.log(data);
+      this.social.loginWithFacebook(data.authToken).subscribe(
+        data => {
+          console.log(data);
+        }
+      )
     });
   }
 
