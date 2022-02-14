@@ -45,27 +45,35 @@ public class SocialController {
 	@Value("${google.id}")
 	private String idClient;
 
+	/** The user service. */
 	@Autowired
 	private UserService userService;
-	
+
+	/** The password encoder. */
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	/** The role service. */
 	@Autowired
 	private RoleService roleService;
 
+	/** The secret password. */
 	@Value("${secret.password}")
 	private String secretPassword;
 
+	/** The token service. */
 	@Autowired
 	private TokenService tokenService;
+
+	/** The email. */
+	private String email;
 
 	/**
 	 * Login with google.
 	 *
 	 * @param tokenDto the token dto
 	 * @return the response entity
-	 * @throws Exception
+	 * @throws Exception the exception
 	 */
 	@PostMapping("/google")
 	public ResponseEntity<LoginResponse> loginWithGoogle(@RequestBody TokenDto tokenDto) throws Exception {
@@ -79,14 +87,12 @@ public class SocialController {
 		GoogleIdToken googleIdToken = GoogleIdToken.parse(verifier.getJsonFactory(), tokenDto.getToken());
 
 		GoogleIdToken.Payload payload = googleIdToken.getPayload();
-		String email = payload.getEmail();
+		email = payload.getEmail();
 		UserBo user;
 		if (userService.ifEmailExist(email)) {
 			user = userService.findUserByEmail(email);
-			System.out.println("==========> Email exist");
 		} else {
 			user = createUser(email);
-			System.out.println("==========> Email not exist");
 		}
 
 		JwtLogin jwtLogin = new JwtLogin();
@@ -97,6 +103,41 @@ public class SocialController {
 
 	}
 
+	/**
+	 * Login with facebook.
+	 *
+	 * @param tokenDto the token dto
+	 * @return the response entity
+	 * @throws Exception the exception
+	 */
+	@PostMapping("/facebook")
+	public ResponseEntity<LoginResponse> loginWithFacebook(@RequestBody TokenDto tokenDto) throws Exception {
+
+		Facebook facebook = new FacebookTemplate(tokenDto.getToken());
+		String[] data = { "email", "name", "picture" };
+		User user = facebook.fetchObject("me", User.class, data);
+
+		email = user.getEmail();
+		UserBo userBo;
+		if (userService.ifEmailExist(email)) {
+			userBo = userService.findUserByEmail(email);
+		} else {
+			userBo = createUser(email);
+		}
+
+		JwtLogin jwtLogin = new JwtLogin();
+		jwtLogin.setEmail(userBo.getEmail());
+		jwtLogin.setPassword(secretPassword);
+
+		return new ResponseEntity<>(tokenService.login(jwtLogin), HttpStatus.OK);
+	}
+
+	/**
+	 * Creates the user.
+	 *
+	 * @param email the email
+	 * @return the user bo
+	 */
 	private UserBo createUser(String email) {
 		UserBo user = new UserBo();
 
@@ -106,22 +147,6 @@ public class SocialController {
 		user.getRoles().add(roles.get(0));
 
 		return userService.saveUser(user);
-	}
-
-	/**
-	 * Login with facebook.
-	 *
-	 * @param tokenDto the token dto
-	 * @return the response entity
-	 */
-	@PostMapping("/facebook")
-	public ResponseEntity<?> loginWithFacebook(@RequestBody TokenDto tokenDto) {
-
-		Facebook facebook = new FacebookTemplate(tokenDto.getToken());
-		String[] data = { "email", "name", "picture" };
-		User user = facebook.fetchObject("me", User.class, data);
-
-		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
 }
