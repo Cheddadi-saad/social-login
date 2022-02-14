@@ -3,19 +3,16 @@ package com.spring.social.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,8 +22,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "role")
+public class RoleBo {
 
 	/** The id. */
 	@Id
@@ -34,17 +31,11 @@ public class User {
 	@Column(name = "id")
 	private Long id;
 
-	/** The email. */
-	@Column(name = "email")
-	private String email;
+	/** The name role. */
+	@Column(name = "role_name")
+	private String nameRole;
 
-	/** The password. */
-	@Column(name = "password")
-	private String password;
-
-	/** The roles. */
-	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "role_id") })
-	private Set<Role> roles = new HashSet<>();
+	/** The users. */
+	@ManyToMany(mappedBy = "roles")
+	private Set<UserBo> users = new HashSet<>();
 }

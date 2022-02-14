@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.spring.social.model.User;
+import com.spring.social.model.UserBo;
 
 /**
  * The Class UserPrincipal.
@@ -20,7 +20,7 @@ public class UserPrincipal implements UserDetails {
 	private static final long serialVersionUID = 4222810593650788138L;
 
 	/** The user. */
-	private User user;
+	private UserBo user;
 
 	/**
 	 * Instantiates a new user principal.
@@ -28,7 +28,7 @@ public class UserPrincipal implements UserDetails {
 	 * @param user the user
 	 */
 	@Autowired
-	public UserPrincipal(User user) {
+	public UserPrincipal(UserBo user) {
 		this.user = user;
 	}
 

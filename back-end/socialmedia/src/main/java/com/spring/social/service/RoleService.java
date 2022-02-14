@@ -1,9 +1,12 @@
 package com.spring.social.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.social.dao.RoleRepository;
+import com.spring.social.model.RoleBo;
 
 /**
  * The Class RoleService.
@@ -24,4 +27,7 @@ public class RoleService {
 		this.roleRepository = roleRepository;
 	}
 
+	public List<RoleBo> getRoles() {
+		return roleRepository.findAll();
+	}
 }

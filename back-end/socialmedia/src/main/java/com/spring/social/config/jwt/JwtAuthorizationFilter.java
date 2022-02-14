@@ -3,7 +3,7 @@ package com.spring.social.config.jwt;
 import com.auth0.jwt.JWT;
 import com.spring.social.dao.UserRepository;
 import com.spring.social.dto.UserPrincipal;
-import com.spring.social.model.User;
+import com.spring.social.model.UserBo;
 import com.spring.social.util.JwtProperties;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -61,7 +61,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 			// If so, then grab user details and create spring auth token using username,
 			// pass, authorities/roles
 			if (email != null) {
-				User user = userRepository.findByEmail(email);
+				UserBo user = userRepository.findByEmail(email);
 				UserPrincipal principal = new UserPrincipal(user);
 				return new UsernamePasswordAuthenticationToken(email, null, principal.getAuthorities());
 			}

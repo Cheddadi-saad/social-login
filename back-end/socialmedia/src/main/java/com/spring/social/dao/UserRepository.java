@@ -3,13 +3,13 @@ package com.spring.social.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.spring.social.model.User;
+import com.spring.social.model.UserBo;
 
 /**
  * The Interface UserRepository.
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface UserRepository extends JpaRepository<UserBo, Long>{
 
 	/**
 	 * Find by email.
@@ -17,5 +17,9 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	 * @param email the email
 	 * @return the user
 	 */
-	public User findByEmail(String email);
+	public UserBo findByEmail(String email);
+	
+	public boolean existsByEmail(String email);
+	
+	
 }

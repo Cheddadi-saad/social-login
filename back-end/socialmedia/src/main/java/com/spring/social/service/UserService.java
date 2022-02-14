@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.social.dao.UserRepository;
 import com.spring.social.dto.UserPrincipal;
-import com.spring.social.model.User;
+import com.spring.social.model.UserBo;
 
 /**
  * The Class UserService.
@@ -38,9 +38,21 @@ public class UserService implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		User user = userRepository.findByEmail(email);
+		UserBo user = userRepository.findByEmail(email);
 
 		return new UserPrincipal(user);
+	}
+
+	public boolean ifEmailExist(String email) {
+		return userRepository.existsByEmail(email);
+	}
+	
+	public UserBo findUserByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+	
+	public UserBo saveUser(UserBo user) {
+		return userRepository.save(user);
 	}
 
 }
