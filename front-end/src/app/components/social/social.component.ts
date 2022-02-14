@@ -13,6 +13,7 @@ import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-logi
 export class SocialComponent implements OnInit {
   user: SocialUser = new SocialUser();
   loggedIn: boolean = false;
+
   constructor(private authService: SocialAuthService, private social: SocialService) {}
 
   /**
@@ -34,7 +35,7 @@ export class SocialComponent implements OnInit {
       this.user = data;
       this.social.loginWithGoogle(data.idToken).subscribe(
         data => {
-          console.log(data);
+          this.reloadPage();
         }
       );
     });
@@ -48,16 +49,19 @@ export class SocialComponent implements OnInit {
       this.user = data;
       this.social.loginWithFacebook(data.authToken).subscribe(
         data => {
-          console.log(data);
+          this.reloadPage();
+
         }
       )
     });
   }
 
-  /**
-   * Signs out
-   */
-  signOut(): void {
-    this.authService.signOut();
+  logout(): void {
+    this.social.signOut();
+    this.reloadPage();
+  }
+
+  reloadPage(): void {
+    window.location.reload();
   }
 }

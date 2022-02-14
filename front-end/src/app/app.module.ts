@@ -1,9 +1,10 @@
+import { HttpInterceptorService } from './services/login/http-interceptor.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SportingComponent } from './sporting/sporting.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
@@ -36,6 +37,11 @@ import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-logi
           },
         ],
       } as SocialAuthServiceConfig,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],

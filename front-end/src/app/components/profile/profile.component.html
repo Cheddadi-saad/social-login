@@ -5,6 +5,16 @@
       <h2>Hello {{ user.name }}</h2>
       <img src="{{ user.photoUrl }}" />
       <p>{{ user.email }}</p>
+
+
+    </div>
+    <div *ngIf="studentsResponse.length > 0">
+      <table class="table">
+        <tr *ngFor="let item of studentsResponse">
+          <td>{{item.name}}</td>
+          <td>{{item.age}}</td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>
