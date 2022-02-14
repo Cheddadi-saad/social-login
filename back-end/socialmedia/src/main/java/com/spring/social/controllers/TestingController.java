@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import com.spring.social.model.Student;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin("https://localhost:4200")
 public class TestingController {
 
 	/** The students. */

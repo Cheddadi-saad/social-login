@@ -1,5 +1,7 @@
 package com.spring.social.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -10,6 +12,7 @@ public class LoginResponse {
 	
 
 	private String token;
+	private List<String> listRoles;
 
 	
 }

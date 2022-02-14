@@ -3,6 +3,8 @@ package com.spring.social.service;
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,6 +44,8 @@ public class TokenService {
 				.authenticate(new UsernamePasswordAuthenticationToken(jwtLogin.getEmail(), jwtLogin.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authenticate);
 		String token = generateToken(authenticate);
-		return new LoginResponse(token);
+		List<String> listRoles = authenticate.getAuthorities().stream().map(role -> role.getAuthority())
+				.collect(Collectors.toList());
+		return new LoginResponse(token, listRoles);
 	}
 }
